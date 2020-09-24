@@ -291,7 +291,7 @@ Tagify.prototype = {
       }
     }
   },
-  customEventsList: ['change', 'add', 'paste', 'remove', 'invalid', 'input', 'click', 'keydown', 'focus', 'blur', 'edit:input', 'edit:updated', 'edit:start', 'edit:keydown', 'dropdown:show', 'dropdown:hide', 'dropdown:select', 'dropdown:updated', 'dropdown:noMatch'],
+  customEventsList: ['change', 'add', 'onPaste', 'remove', 'invalid', 'input', 'click', 'keydown', 'focus', 'blur', 'edit:input', 'edit:updated', 'edit:start', 'edit:keydown', 'dropdown:show', 'dropdown:hide', 'dropdown:select', 'dropdown:updated', 'dropdown:noMatch'],
   // expose this handy utility function
   parseHTML: parseHTML,
   // Using ARIA & role attributes
@@ -1046,11 +1046,6 @@ Tagify.prototype = {
         if (_s.mode == 'select') !this.state.dropdown.visible && this.dropdown.show.call(this);
       },
       onPaste: function onPaste(e) {
-        if (this.customEventsList.paste) {
-          this.customEventsList.paste(e);
-          return;
-        }
-
         var clipboardData, pastedData;
         e.preventDefault(); // Get pasted data via clipboard API
 
