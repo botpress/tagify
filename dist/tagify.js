@@ -1047,6 +1047,7 @@ Tagify.prototype = {
       },
       onPaste: function onPaste(e) {
         if (this.customEventsList.paste) {
+          this.customEventsList.paste(e);
           return;
         }
 
