@@ -245,7 +245,7 @@ Tagify.prototype = {
         }
     },
 
-    customEventsList : ['change', 'add', 'remove', 'invalid', 'input', 'click', 'keydown', 'focus', 'blur', 'edit:input', 'edit:updated', 'edit:start', 'edit:keydown', 'dropdown:show', 'dropdown:hide', 'dropdown:select', 'dropdown:updated', 'dropdown:noMatch'],
+    customEventsList : ['change', 'add', 'paste', 'remove', 'invalid', 'input', 'click', 'keydown', 'focus', 'blur', 'edit:input', 'edit:updated', 'edit:start', 'edit:keydown', 'dropdown:show', 'dropdown:hide', 'dropdown:select', 'dropdown:updated', 'dropdown:noMatch'],
 
     // expose this handy utility function
     parseHTML,
@@ -809,7 +809,7 @@ Tagify.prototype = {
                                     else
                                         this.trigger('remove', { tag:node, index:nodeIdx, data:tagData })
                                 })
-                                .filter(n=>n)  // remove empty items in the mapped array
+                                    .filter(n=>n)  // remove empty items in the mapped array
                             }, 50) // Firefox needs this higher duration for some reason or things get buggy when deleting text from the end
                             break;
                         }
@@ -1052,6 +1052,10 @@ Tagify.prototype = {
             },
 
             onPaste(e){
+                if (this.customEventsList.paste) {
+                    return
+                }
+
                 var clipboardData, pastedData;
 
                 e.preventDefault()
@@ -1063,7 +1067,7 @@ Tagify.prototype = {
                 if( this.settings.mode == 'mix' )
                     this.injectAtCaret(pastedData, window.getSelection())
                 else
-                  this.addTags(pastedData)
+                    this.addTags(pastedData)
                     // this.input.set.call(this, pastedData)
             },
 
@@ -2125,8 +2129,8 @@ Tagify.prototype = {
                     this.update() // update the original input with the current value
                 }
             }
-        )
-        .catch(reason => {})
+            )
+            .catch(reason => {})
     },
 
     removeAllTags(){
