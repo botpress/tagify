@@ -245,7 +245,7 @@ Tagify.prototype = {
         }
     },
 
-    customEventsList : ['change', 'add', 'onPaste', 'remove', 'invalid', 'input', 'click', 'keydown', 'focus', 'blur', 'edit:input', 'edit:updated', 'edit:start', 'edit:keydown', 'dropdown:show', 'dropdown:hide', 'dropdown:select', 'dropdown:updated', 'dropdown:noMatch'],
+    customEventsList : ['change', 'add', 'paste', 'remove', 'invalid', 'input', 'click', 'keydown', 'focus', 'blur', 'edit:input', 'edit:updated', 'edit:start', 'edit:keydown', 'dropdown:show', 'dropdown:hide', 'dropdown:select', 'dropdown:updated', 'dropdown:noMatch'],
 
     // expose this handy utility function
     parseHTML,
@@ -1052,6 +1052,10 @@ Tagify.prototype = {
             },
 
             onPaste(e){
+                if (this.settings.callbacks.paste) {
+                    this.settings.callbacks.paste(e)
+                    return
+                }
                 var clipboardData, pastedData;
 
                 e.preventDefault()
