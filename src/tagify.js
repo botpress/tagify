@@ -2671,12 +2671,18 @@ Tagify.prototype = {
          * @param {Object} elm  DOM node to select
          */
         selectOption( elm ){
+
             var hideDropdown = this.settings.dropdown.closeOnSelect;
 
             if( !elm ) {
                 this.addTags(this.input.value, true)
                 hideDropdown && this.dropdown.hide.call(this)
                 return;
+            }
+
+            if (this.settings.callbacks.selectOption) {
+                this.settings.callbacks.selectOption(elm)
+                return
             }
 
             // if in edit-mode, do not continue but instead replace the tag's text.
